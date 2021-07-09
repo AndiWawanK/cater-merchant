@@ -1,0 +1,27 @@
+{
+    "Pesanan": {
+        "name": "fast-food-outline",
+        "type": "Ionicons",
+        "size": 24
+    },
+    "Menu": {
+        "name": "book-open", 
+        "type": "SimpleLineIcons",
+        "size": 20
+    },
+    "Laporan": {
+        "name": "bar-chart",
+        "type": "Ionicons",
+        "size": 21
+    },
+    "Pesan": {
+        "name": "mail-unread-outline",
+        "type": "Ionicons",
+        "size": 23
+    },
+    "Profil": {
+        "name": "person-outline",
+        "type": "Ionicons",
+        "size": 21
+    }
+}
