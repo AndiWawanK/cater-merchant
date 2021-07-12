@@ -68,7 +68,7 @@ const NewOrder = ({ navigation }) => {
 
     useEffect(() => {
         getIncomingHandler();
-    })
+    }, []);
 
     return(
         <FlatList 

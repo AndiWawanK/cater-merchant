@@ -68,7 +68,7 @@ const PackageList = ({navigation}) => {
     
     useEffect(() => {
         handleGetPackets();
-    })
+    }, [])
 
     return (
         <Container backgroundColor="white">
