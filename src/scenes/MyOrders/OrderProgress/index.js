@@ -1,30 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import styles from './styles';
-
-const DATA = [
-    {
-        orderCode: 'VHGTA87542',
-        orderHours: '05:00 pm',
-        paketName: 'Paket Super Hemat - 1 minggu',
-        paketInfo: 'Menunggu Konfirmasi',
-        Date: '05 April 2020-11 April 2020'
-    },
-    {
-        orderCode: 'VHGTA88178',
-        orderHours: '09:00 pm',
-        paketName: 'Paket Super Diet - 2 minggu',
-        paketInfo: 'Menunggu Konfirmasi',
-        Date: '01 April 2020-14 April 2020'
-    },
-    {
-        orderCode: 'VHGTA88131',
-        orderHours: '23:00 pm',
-        paketName: 'Paket Super Diet - 2 bulan',
-        paketInfo: 'Menunggu Konfirmasi',
-        Date: '05 April 2020-05 Juni 2020'
-    }
-]
+import { getProgressOrder } from 'utils';
 
 const Item = (props) => {
     return (
@@ -43,16 +20,32 @@ const Item = (props) => {
 }
 
 const OrderProgress = ({navigation}) => {
+
+    const [order, setOrder] = useState({})
+
+    const handleGetProgressOrder = () => {
+        getProgressOrder().then((res) => {
+            setOrder(res.data);
+            console.log(res.data)
+        }).catch((err) => { 
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        handleGetProgressOrder();
+    }, [])
+
     return(
             <FlatList 
-                data={DATA}
+                data={order}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                     <Item 
-                        orderCode={item.orderCode}
-                        orderHours={item.orderHours}
-                        paketName={item.paketName}
-                        paketInfo={item.paketInfo}
+                        orderCode={item.id}
+                        orderHours={item.ends_at}
+                        paketName={item.packet.name}
+                        paketInfo={item.status}
                         Date={item.Date}
                         onPress={() => navigation.navigate('DetailOrderProgress')}
                     />

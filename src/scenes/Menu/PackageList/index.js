@@ -4,32 +4,16 @@ import { Container, Header, Icon } from 'components';
 import { getPackets } from 'utils';
 import styles from './styles';
 
-const DATA = [
-    {
-        image: require("assets/7-Rekomendasi-Jasa-Catering-Harian-Jogja-Enak-Murah-Emak-Emak-Pasti-Suka2.png"),
-        name: 'Paket Hemat',
-        desc: 'Reference site about Lorem Ipsum, giving informat on its origins, as well as a random Lipsum generator.'
-    },
-    {
-        image: require("assets/7-Rekomendasi-Jasa-Catering-Harian-Jogja-Enak-Murah-Emak-Emak-Pasti-Suka2.png"),
-        name: 'Paket Boros',
-        desc: 'Reference site about Lorem Ipsum, giving informat on its origins, as well as a random Lipsum generator.'
-    },
-    {
-        image: require("assets/7-Rekomendasi-Jasa-Catering-Harian-Jogja-Enak-Murah-Emak-Emak-Pasti-Suka2.png"),
-        name: 'Paket Diet',
-        desc: 'Reference site about Lorem Ipsum, giving informat on its origins, as well as a random Lipsum generator.'
-    },
-]
-
 const Item = (props) => {
+
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
     return (
         <Container>
             <ScrollView>
                 <View style={styles.packageName}>
-                    <Image source={props.image} style={styles.imageDetail} />
+                    <Image source={{uri: props.image}} style={styles.imageDetail} />
                     <View style={styles.paketSection}>
                         <Text style={styles.textName}>{props.name}</Text>
                         <Text style={styles.textPaket}>{props.desc}</Text>
@@ -58,17 +42,16 @@ const Item = (props) => {
 }
 
 const PackageList = ({navigation}) => {
-    const handleGetPackets = () => {
-        getPackets().then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
-    
+
+    const [listPackets, setListPackets] = useState([])
+
     useEffect(() => {
-        handleGetPackets();
-    }, [])
+        getPackets().then((res) => {
+            setListPackets(res.data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, []);
 
     return (
         <Container backgroundColor="white">
@@ -80,13 +63,13 @@ const PackageList = ({navigation}) => {
                 back={true}
             />
             <FlatList
-                data={DATA}
+                data={listPackets}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                     <Item
-                        image={item.image}
+                        image={item.thumbnail}
                         name={item.name}
-                        desc={item.desc}
+                        desc={item.description}
                     />
                 )}
             />
