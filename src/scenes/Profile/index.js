@@ -10,6 +10,11 @@ const SETTING_CHOICES = [
         type: 'MaterialCommunityIcons'
     },
     {
+        name: "Restoran",
+        icon: "restaurant-outline",
+        type: "Ionicons"
+    },
+    {
         name: 'Pusat Bantuan',
         icon: 'loader',
         type: 'Feather'

@@ -1,3 +1,4 @@
+import Loading from "./Auth/Loading";
 import SignIn from "./Auth/SignIn";
 import ForgotPassword from "./Auth/ForgotPassword";
 import NewPassword from "./Auth/NewPassword";
@@ -13,6 +14,7 @@ import NewPackage from "./Menu/NewPackage";
 
 export {
     SignIn,
+    Loading,
     ForgotPassword,
     NewPassword,
     MyOrders,

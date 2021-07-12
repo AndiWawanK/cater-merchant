@@ -59,7 +59,7 @@ export default StyleSheet.create({
     },
     textBtn: {
         fontFamily: Fonts.PMedium,
-        color: Colors.WHITE,
+        color: Colors.BLACK,
         fontSize: RFValue(17)
     }   
 })

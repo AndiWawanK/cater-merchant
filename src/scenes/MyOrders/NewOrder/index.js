@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import styles from './styles';
+import { getIncomingOrder } from 'utils'; 
+import moment from 'moment';
 
 const DATA = [
     {
@@ -51,16 +53,33 @@ const Item = (props) => {
 }
 
 const NewOrder = ({ navigation }) => {
+
+    const [orders, setOrders] = useState([]);
+
+    const getIncomingHandler = () => {
+        console.log('aoeaoe')
+        getIncomingOrder().then((res) => {
+            setOrders(res.data)
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        getIncomingHandler();
+    })
+
     return(
         <FlatList 
-                data={DATA}
+                data={orders}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                     <Item 
-                        orderCode={item.orderCode}
-                        orderHours={item.orderHours}
-                        paketName={item.paketName}
-                        paketInfo={item.paketInfo}
+                        orderCode={item.id}
+                        orderHours={moment(item.ends_at).format('HH:mm')}
+                        paketName={item.packet.name}
+                        paketInfo={item.description}
                         onPress={() => navigation.navigate('DetailMyOrder')} 
                     />
                 )}

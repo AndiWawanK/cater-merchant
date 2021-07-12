@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Switch, FlatList, ScrollView } from 'react-native';
 import { Container, Header, Icon } from 'components';
+import { getPackets } from 'utils';
 import styles from './styles';
 
 const DATA = [
@@ -57,6 +58,18 @@ const Item = (props) => {
 }
 
 const PackageList = ({navigation}) => {
+    const handleGetPackets = () => {
+        getPackets().then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    
+    useEffect(() => {
+        handleGetPackets();
+    })
+
     return (
         <Container backgroundColor="white">
             <Header
