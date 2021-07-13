@@ -1,5 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
-import { AsyncStorage } from "react-native";
 
 Axios.interceptors.request.use(
     async config => {

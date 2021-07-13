@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import styles from './styles';
 import { getProgressOrder } from 'utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Item = (props) => {
     return (
@@ -23,10 +24,9 @@ const OrderProgress = ({navigation}) => {
 
     const [order, setOrder] = useState({})
 
-    const handleGetProgressOrder = () => {
+    const handleGetProgressOrder = async () => {
         getProgressOrder().then((res) => {
             setOrder(res.data);
-            console.log(res.data)
         }).catch((err) => { 
             console.log(err);
         })

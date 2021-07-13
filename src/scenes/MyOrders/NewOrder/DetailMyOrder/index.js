@@ -2,12 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Header } from 'components';
 import { currencyFloat } from 'constants';
+import { getAcceptOrder } from 'utils';
 import styles from "./styles";
 import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DetailMyOrder = ({ navigation, route }) => {
     const [data, setData] = useState(route.params.data)
+
+    const handleAcceptedOrder = () => {
+        getAcceptOrder(data.id).then((res) => {
+            if(res.status == 200) {
+                navigation.navigate("MyOrders");
+            } else {
+                alert('terjadi kesalahan');
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     return (
         <Container>
@@ -62,7 +74,7 @@ const DetailMyOrder = ({ navigation, route }) => {
                         <Text style={styles.noteOrder}>Catatan Pesanan</Text>
                         <Text style={styles.textNotes}>{data.note}</Text>
                     </View>
-                    <TouchableOpacity style={styles.Btn}>
+                    <TouchableOpacity style={styles.Btn} onPress={() => handleAcceptedOrder()}>
                         <Text style={styles.textBtn}>Terima Pesanan</Text>
                     </TouchableOpacity>
                 </View>

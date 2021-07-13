@@ -6,9 +6,6 @@ import styles from './styles';
 
 const Item = (props) => {
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
     return (
         <Container>
             <ScrollView>
@@ -27,10 +24,11 @@ const Item = (props) => {
                     <View style={styles.switch}>
                         <Switch
                             trackColor={{ false: "#D7DBDB", true: "#D7DBDB" }}
-                            thumbColor={isEnabled ? "#FFD422" : "#9B9B9B"}
+                            thumbColor={props.status == 1 ? "#FFD422" : "#9B9B9B"}
+                            disabled
                             // ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
+                            // onValueChange={toggleSwitch}
+                            value={props.status == 1 ? true : false }
                             style={{ margin: 10 }}
                         />
                     </View>
@@ -70,6 +68,7 @@ const PackageList = ({navigation}) => {
                         image={item.thumbnail}
                         name={item.name}
                         desc={item.description}
+                        status={item.status}
                     />
                 )}
             />

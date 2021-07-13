@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import styles from './styles';
 import { getIncomingOrder } from 'utils'; 
 import moment from 'moment';
@@ -31,9 +32,11 @@ const NewOrder = ({ navigation }) => {
         })
     }
 
-    useEffect(() => {
-        getIncomingHandler();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            return getIncomingHandler();
+        }, [])
+    )
 
     return(
         <FlatList 
