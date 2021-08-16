@@ -45,7 +45,8 @@ export default StyleSheet.create({
     },
     input: {
         alignItems: 'center',
-        marginBottom: width * .05
+        marginBottom: width * .05,
+        // flex: 1
     },
     Btn: {
         height: width * .12,

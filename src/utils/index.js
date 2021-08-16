@@ -1,6 +1,6 @@
 import { apiGet, apiPost } from 'services';
 
-const url = 'http://52.221.227.27/api';
+const url = 'http://35.240.225.60/api';
 
 const endpoint = {
     login: `${url}/login`,
@@ -15,7 +15,7 @@ const endpoint = {
     profile: `${url}/merchant/profile`,
     restaurant_profile: `${url}/merchant/profile-restaurant`,
     update_profile: `${url}/merchant/update-profile`,
-    packets: `${url}/merchant/packets`,
+    packets: `${url}/merchant/packets/`,
     packet_menu: `${url}/merchant/packet-menu/`,
 };
 
@@ -35,6 +35,8 @@ export const new_password = (body) => {
     return apiPost(endpoint.new_password, body);
 }
 
+
+//ORDER
 export const getIncomingOrder = () => {
     return apiGet(endpoint.incoming_order);
 } 
@@ -47,12 +49,18 @@ export const getAcceptOrder = (orderId) => {
     return apiGet(endpoint.accept_order + orderId);
 }
 
+
+//PACKET
 export const createPacket = (body) => {
     return apiPost(endpoint.create_packet, body);
 }
 
 export const createPacketMenu = (body) => {
     return apiPost(endpoint.create_packet_menu, body);
+}
+
+export const updatePacket = (packetId, body) => {
+    return apiPost(endpoint.packets + packetId, body);
 }
 
 export const getPackets = () => {

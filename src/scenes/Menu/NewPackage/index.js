@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Container, Header, InputText } from 'components';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { createPacket } from 'utils';
+import { createPacket, updatePacket } from 'utils';
 import styles from './styles';
+import { BASE_URL } from 'constants';
 
-const NewPackage = ({ navigation }) => {
+const NewPackage = ({ navigation, route }) => {
     const [state, setState] = useState({
         imageOpt: {
-            fileUri: '',
-            file: {}
+            fileUri: route.params?.data ? BASE_URL + route.params.data.thumbnail : '',
+            file: ''
         },
-        packageName: '',
-        price: '',
-        discount: '',
-        desc: '',
+        packageName: route.params?.data ?  route.params.data.name :  '',
+        price: route.params?.data ? route.params.data.price :  '',
+        discount: route.params?.data ? route.params.data.discount : '',
+        desc: route.params?.data ? route.params.data.description : '',
+        status: route.params?.data ? route.params.data.status : ''
     })
     const [filledForm, setFilledForm] = useState(false)
 
@@ -43,38 +45,64 @@ const NewPackage = ({ navigation }) => {
         }))
     }
 
-    const handleCreatePacket = () => {
+    const handleSubmitPacket = () => {
         let formData = new FormData();
-        formData.append('banner', state.imageOpt.file)
+        if(state.imageOpt.file != '') {
+            formData.append('banner', state.imageOpt.file)
+        }
         formData.append('packet_name', state.packageName)
         formData.append('packet_price', state.price)
         formData.append('discount', state.discount == '' ? 0 : state.discount)
         formData.append('description', state.desc)
-        createPacket(formData).then((res) => {
-            if(res.status == 201) {
-                alert('Pembuatan Paket Berhasil')
-                navigation.navigate('PackageList')
-            } else {
-                alert('Terjadi Kesalahan');
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
+
+        if(route.params?.data) {
+            const { id } = route.params.data;
+            updatePacket(id, formData).then(res => {
+                // console.log(res)
+                if(res.status == 200) {
+                    Alert.alert(
+                        'Success',
+                        'Update Paket Berhasil',
+                        [
+                            {
+                                text: "Ok",
+                                onPress: () => navigation.goBack(),
+                                // style: "cancel",
+                            },
+                        ]
+                    )
+                } else {
+                    alert('Terjadi Kesalahan')
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        } else {
+            createPacket(formData).then((res) => {
+                if(res.status == 201) {
+                    alert('Pembuatan Paket Berhasil')
+                    navigation.navigate('PackageList')
+                } else {
+                    alert('Terjadi Kesalahan');
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }
+
 
     const isFilled = () => {
         if(
             state.desc             != '' &&
             state.packageName      != '' &&
-            state.price            != '' &&
-            state.imageOpt.fileUri != ''
+            state.price            != ''
         ) {
             setFilledForm(true);
         } else {
             setFilledForm(false)
         }
     }
-
 
     useEffect(() => {
         isFilled();
@@ -115,7 +143,7 @@ const NewPackage = ({ navigation }) => {
                             mode="regular"
                             keyboardType='number-pad'
                             descInput="Harga Paket"
-                            placeholder="100"
+                            placeholder="10.00000"
                             star={true}
                             value={state.price}
                             onChangeText={(val) => handleInput(val, 'price')}
@@ -140,8 +168,8 @@ const NewPackage = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={{ paddingTop: 75}}>
-                    <TouchableOpacity style={[styles.Btn, filledForm ? null : { backgroundColor: '#787404'}]} onPress={() => handleCreatePacket()}>
-                        <Text style={[styles.textBtn]}>Terima Pesanan</Text>
+                    <TouchableOpacity style={[styles.Btn, filledForm ? null : { backgroundColor: '#787404'}]} onPress={() => handleSubmitPacket()}>
+                        <Text style={[styles.textBtn]}>{route.params?.data ? "Update Paket" : "Buat Paket" }</Text>
                     </TouchableOpacity>
                 </View>
             </View>
