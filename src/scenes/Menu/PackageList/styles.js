@@ -50,10 +50,8 @@ export default StyleSheet.create({
         flex: 1
     },
     Line: {
-
         height: width / width, 
-        backgroundColor: Colors.GRAY_DARK, 
-        
+        backgroundColor: Colors.GRAY_DARK,    
     },
     Btn: {
         height: width * .12,
@@ -69,5 +67,8 @@ export default StyleSheet.create({
         fontFamily: Fonts.PMedium,
         color: Colors.WHITE,
         fontSize: RFValue(17)
-    }   
+    },
+    switch: {
+        justifyContent: 'center',
+    }  
 })
