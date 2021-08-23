@@ -60,7 +60,7 @@ const BottomTabNavigation = () => (
     >
         <BottomTab.Screen name="Pesanan" component={MyOrders} />
         <BottomTab.Screen name="Menu" component={Menu} />
-        <BottomTab.Screen name="Laporan" component={Report} />
+        {/* <BottomTab.Screen name="Laporan" component={Report} /> */}
         <BottomTab.Screen name="Pesan" component={Inbox} />
         <BottomTab.Screen name="Profil" component={Profile} />
     </BottomTab.Navigator>

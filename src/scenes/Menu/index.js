@@ -40,7 +40,7 @@ const Menu = ({ navigation }) => {
                     <Icon name="filter" type="AntDesign" style={styles.iconFilter} />
                 </TouchableOpacity>
             </View>
-            <View style={styles.packageName}>
+            {/* <View style={styles.packageName}>
                 <Image source={require("assets/7-Rekomendasi-Jasa-Catering-Harian-Jogja-Enak-Murah-Emak-Emak-Pasti-Suka2.png")} style={styles.imageDetail} />
                 <View style={styles.paketSection}>
                     <Text style={styles.textName}>Paket Hemat</Text>
@@ -62,7 +62,7 @@ const Menu = ({ navigation }) => {
                     <Text style={styles.Day}>Senin</Text>
                     <Text style={styles.foodMenu}>Nasi telur komplit</Text>
                 </View>
-            </View>
+            </View> */}
         </Container>
     )
 }
